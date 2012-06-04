@@ -12,7 +12,8 @@ Raphael.fn.connection = function(obj1,obj2,color, raphael) {
     };
 
     var node = raphael.path(getPath()).toBack();
-		node.attr({'stroke':'#205b80'});
+		node.attr({'stroke':color,'stroke-width':'2'});
+		link.push(node);
 };
 
 
