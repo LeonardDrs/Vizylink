@@ -17,6 +17,25 @@ function newObj(nom,inf,int,id) {
 	return o;
 }
 $(function(){
+	$('body, #content').height(window.innerHeight);
+
+	$('#legende').hide();
+	
+	$('.legende').click(function(){
+		$('#legende').show();
+		$('.legende').css({"background":"#f1f1f1","color":"#333"});
+	});
+	
+	$('#close').click(function(){
+		$('#legende').hide();
+		$('.legende').css({"background":"#86888a","color":"#151a20"});
+	});
+	
+	
+	
+	
+	
+	
 	var mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel" //FF doesn't recognize mousewheel as of FF3.x
 
 	if (document.attachEvent) //if IE (and Opera depending on user setting)
@@ -60,7 +79,7 @@ $(function(){
 	JK = newObj("Léonard",66,intA,"JK");
 	// HETIC.push(A,B,C,E);
 	 HETIC.push(A,B,C,D,E,F,G,H,I,J,JA,JZ,JE,JR,JT,JY,JU,JI,JO,JP,JQ,JS,JD,JF,JG,JH);
-	var r=Raphael('container',"100%","100%");
+	var r=Raphael('content',"100%","100%");
 	r.customAttributes.arc = function (xloc, yloc, value, R) {
 		var total = 100;
 		var alpha = 360 / total * value;
@@ -101,7 +120,7 @@ $(function(){
 	function random (x,y){
 		return Math.floor(Math.random()*(y-x)+x);
 	}
-	var _r = "#container";
+	var _r = "#content";
 	var viewBoxWidth  = 1000; 
 	var viewBoxHeight = 800;
 	var mousedown;

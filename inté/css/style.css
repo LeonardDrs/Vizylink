@@ -126,3 +126,9 @@ body {
 	opacity: 0.5;
 	float: right;
 }
+
+#container {
+	position:absolute;
+	height:100%;
+	width:100%;
+}
