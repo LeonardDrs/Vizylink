@@ -17,6 +17,8 @@ Raphael.fn.connection = function(obj1,obj2,color, raphael) {
 };
 
 
+
+
 Raphael.fn.connecteion = function (obj1, obj2, line, bg) {
     if (obj1.line && obj1.from && obj1.to) {
         line = obj1;

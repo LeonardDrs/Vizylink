@@ -3,6 +3,8 @@ var circles = [];
 var grp = [];
 var link = [];
 var onClickCircle=false;
+var effect = [] // onclick
+var test;
 // var pos = [{"x":0,"y":0,"r":0}];
 var pos = [{}];
 function newObj(nom,inf,int,id) {
@@ -59,6 +61,46 @@ $(function(){
 	// HETIC.push(A,B,C,E);
 	 HETIC.push(A,B,C,D,E,F,G,H,I,J,JA,JZ,JE,JR,JT,JY,JU,JI,JO,JP,JQ,JS,JD,JF,JG,JH);
 	var r=Raphael('container',"100%","100%");
+	r.customAttributes.arc = function (xloc, yloc, value, R) {
+		var total = 100;
+		var alpha = 360 / total * value;
+		var a = (90 - alpha) * Math.PI / 180;
+		var x = xloc + R * Math.cos(a);
+		var y = yloc - R * Math.sin(a);
+ 		var path;
+		if(onClickCircle && value<=100){
+			if (total == value) {
+				path = [
+				["M", xloc, yloc - R],
+				["A", R, R, 0, 1, 1, xloc - 0.01, yloc - R]
+				];
+			} else {
+				path = [
+				["M", xloc, yloc - R],
+				["A", R, R, 0, +(alpha > 180), 1, x, y]
+				];
+			}
+		} else {
+			if (total == value) {
+				path = [
+				["M", xloc, yloc - R],
+				["A", R, R, 0, 1, 1, xloc - 0.01, yloc - R]
+				];
+			} else {
+				path = [
+				["M", xloc, yloc - R],
+				["A", R, R, 0, +(alpha < 540), 0, x, y]
+				];
+			}
+		}
+	    
+	    return {
+	        path: path
+	    };
+	};
+	function random (x,y){
+		return Math.floor(Math.random()*(y-x)+x);
+	}
 	var _r = "#container";
 	var viewBoxWidth  = 1000; 
 	var viewBoxHeight = 800;
@@ -133,10 +175,10 @@ $(function(){
 	}
 
 	function wiggle (t,wbound,origCx,origCy) {
-		console.log(t[0].attrs.cy,'recu')
+		// console.log(t[0].attrs.cy,'recu')
 		var newcx = origCx + rdm(-wbound, wbound);
 		var newcy = origCy + rdm(-wbound, wbound);
-	console.log(origCy,newcy,t[0].name)
+	// console.log(origCy,newcy,t[0].name)
 		// t.animate({cx: newcx, cy: newcy}, 500, '<');
 		t.animate ({transform:'t'+newcx+newcy},1000)
 		// t[1].animate({cx: newcx, cy: newcy}, 500, '<');
@@ -166,15 +208,7 @@ $(function(){
 		ctx.lineWidth = 10;
 		ctx.stroke();
 */
-	$('#container svg').click(function(e) {
-		if (e.target.nodeName === "svg" && onClickCircle)
-	    {
-			rinitCicles();
-			clearLinks()
-			initLinks();
-			onClickCircle=false;
-	    }	
-	})
+
 
 	function checkPos(x,y,r,debug) {
 		for (var i=0; i < pos.length; i++) {
@@ -200,8 +234,8 @@ $(function(){
 		// console.debug(pos)
 		pos.push({"x":x,"y":y,"r":r,"deb":debug});
 		// console.log(pos,"fin du tour, contenu de pos")
-		cx=x;
-		cy=y;
+		cxCircle=x;
+		cyCircle=y;
 		// pos.push({"x":cx,"y":cy,"rad":rad})
 	}
 	
@@ -212,14 +246,14 @@ $(function(){
 		var intLength = HETIC[pin].interactions.length;
 		var rad = intLength*75/13; // ajustements possible (taille)
 		var l = 1/2*(100-HETIC[pin].influence)+35 // ajustements possibles (couleur)
-		var cx = Math.random()*900+200;
-		var cy = Math.random()*600+100;
-		checkPos(cx,cy,rad,HETIC[pin].name);
+		var cxCircle = Math.random()*900+200;
+		var cyCircle = Math.random()*600+100;
+		checkPos(cxCircle,cyCircle,rad,HETIC[pin].name);
 		var color = Raphael.hsl(203,90,l);
-		var circle = r.circle(cx,cy,rad); 
+		var circle = r.circle(cxCircle,cyCircle,rad); 
 			circle.name = HETIC[pin].name;
-			circle.attrs.origCx = cx;
-			circle.attrs.origCy = cy;
+			circle.attrs.origCx = cxCircle;
+			circle.attrs.origCy = cyCircle;
 			circle.attrs.color = color;
 			circle.attrs.l = l;
 			circle.attrs.ID = HETIC[pin]["ID"];
@@ -228,7 +262,7 @@ $(function(){
 			// console.log(cy,'enregistr')
 			// circle.hover(function(e) {console.log(this.name)},function() {})
 			circle.attr({"stroke":"transparent", fill: color});
-		var text = r.text(cx,cy,HETIC[pin].name);
+		var text = r.text(cxCircle,cyCircle,HETIC[pin].name);
 			text.attrs.circle = circle;
 		group.push(circle);
 		group.push(text);
@@ -245,18 +279,89 @@ $(function(){
 		}
 	}
 	
+	
+	$('#container svg').click(function(e) {
+		if (e.target.nodeName === "svg" && onClickCircle)
+	    {
+			rinitCicles();
+			clearLinks()
+			initLinks();
+			initHalo();
+	    }	
+	})
+	
+	function initHalo(){
+		var x = effect[0]['x'];
+		var y = effect[0]['y'];
+		var rad = effect[0]['rad'];
+		effect[0]['halo'].animate({
+			arc: [x,y,200,rad]
+		}, 500,"<>",function() {
+			onClickCircle=false;
+		});
+		x2 = effect[1].attrs.cx;
+		y2 = effect[1].attrs.cy;
+		// effect[1].animate({transform:'matrix(1,0,0,1,'+x2+','+y2+')'},600,"=",function() {this.remove()});
+		effect[1].animate({transform:'m'+x2+' '+y2},600,"<",function() {this.remove()});
+		effect = [];
+	}
+	
 	function onClick(t){
-		onClickCircle=true;
 		for (i=0;i<circles.length;i++) {
 			if (t!=circles[i].circle) {
 				var l = circles[i].circle.attrs.l
 				var color = Raphael.hsl(200,30,l);
 				circles[i].circle.attr({"stroke":"transparent", fill: color});
 			} else {
-				var currCircle = circles[i].circle;
-				circles[i].circle.attr({"stroke":"transparent", fill: circles[i].circle.attrs.color});
+				var currCircle= circles[i].circle;
+				var ccx = currCircle.attrs.cx;
+				var ccy = currCircle.attrs.cy;
+				var ccr = currCircle.attrs.r;
+				var cR = ccr*30/100
+				currCircle.attr({"stroke":"transparent", fill: currCircle.attrs.color});
+			// console.log(t.name);
+				var cx = (5*ccr/7);
+				var cy = (5*ccr/7);
+				var plus = r.circle(ccx,ccy,cR).toBack();
+					plus.attrs.cx = ccx;
+					plus.attrs.cy = ccy;
+					plus.attr({'fill': currCircle.attrs.color,'stroke':'transparent'});
+					// wiggle (plus,10,cx,cy);
+					// plus.animate({"cx":cx,"cy":cy},">",500)
+					plus.animate({transform:'t-'+cx+' -'+cy},600,">")
+				var plusText = 
+					currCircle.attr({"stroke":"transparent", fill: currCircle.attrs.color});
+					
+					// plus.animate({transform :"t"+cx+cy},">",500)
 			}
 		}
+		// animated stuff
+		
+		if(effect[0]){
+			initHalo();
+		}
+		
+			onClickCircle=true;
+		if (!effect.length) {
+			var x=t.attrs.cx;
+			var y=t.attrs.cy;
+			var rad=t.attrs.r+ 5;
+			var halo = r.path().attr({
+				arc: [x,y,0,rad],
+				'stroke': "#F00",
+				'stroke-width': 5
+			}).toBack();
+			halo.stop().animate({
+				arc: [x,y,100,rad],
+				'stroke-width': 5,
+				'stroke': "#F00"
+			}, 500,"<>",function() {
+				onClickCircle=true;	
+			});
+			effect.push({"halo":halo,"x":x,"y":y,"rad":rad});
+			effect.push(plus)
+		}
+		
 		clearLinks();
 		for (j=0;j<interc.length;j++){
 			// console.log(interc[j][0]);
@@ -268,8 +373,12 @@ $(function(){
 			}
 			// if(connexion.push(r.connection(interc[j][0],interc[j][1],"#3c9edb",r))){console.log('done')}
 		}
+		
+		
+		
+
+		
 	}
-		var interc = [];
 	
 	// grp[0].rotate(Math.random() * 90);
 	function wiggleAll() {
