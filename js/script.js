@@ -22,23 +22,86 @@ function newObj(nom,inf,int,id) {
 		};
 	return o;
 }
-$(function(){
-	$('body, #content').height(window.innerHeight);
 
-	$('#legende').hide();
+$(function(){
+
+	var hl; var hc; var hh;
+	$('body, #content').height(window.innerHeight);
 	
-	$('.legende').click(function(){
+	function showlegend(){
 		$('#legende').show();
 		$('.legende').css({"background":"#f1f1f1","color":"#333"});
-	});
+	}
 	
-	$('#close').click(function(){
+	function hidelegend(){
 		$('#legende').hide();
 		$('.legende').css({"background":"#86888a","color":"#151a20"});
+	}
+	
+	function showcreerliste(){
+		$('#creerliste').show();
+		$('.creerliste').css({"background":"#f1f1f1","color":"#333"});
+	}
+	
+	function hidecreerliste(){
+			$('#creerliste').hide();
+			$('.creerliste').css({"background":"#86888a","color":"#151a20"});
+	}
+	
+	$('.legende').click(function(){
+		if(hc == 1){
+			hidecreerliste();
+			showlegend();
+			hc = 0;
+		}else{
+			showlegend();
+		}
+		
+		if(hl == 1){
+			hidelegend();
+			hl = 0;
+		}else { hl = 1;}
+		
 	});
 	
+	$('#closeleg').click(function(){
+		hidelegend();
+		hl = 0;
+	});
+
+	$('.creerliste').click(function(){
+		if(hl == 1){
+			hidelegend();
+			showcreerliste();
+			hl = 0;
+		}else{
+			showcreerliste();
+		}
+		if(hc == 1){
+			hidecreerliste();
+			hc = 0;
+		}else {hc = 1;}
+	});
 	
+	$('#closelist').click(function(){
+		hidecreerliste();
+		hc = 0;
+	});
 	
+	$('.relation').click(function(){
+		if( hh == 1){
+			$('#hashtags').hide();
+			hh = 0;
+		}else{ 
+			$('#hashtags').show();
+			hh = 1;
+		}
+	});
+	
+	$('#closehashtags').click(function(){
+		$('#hashtags').hide();
+		hh = 0;
+	});
 	
 	
 	
@@ -254,13 +317,17 @@ checkPos = function (x,y,r,debug) {
 	
 init = function () {
 	for (pin in users ){
+		console.log('a')
 		var group = r.set();
 		var intLength = users[pin].interactions.length;
-		var rad = intLength*75/13+10; // ajustements possible (taille)
-		var l = 1/2*(100-users[pin].klout)+35 // ajustements possibles (couleur)
-		cxCircle = Math.random()*900+200;
-		cyCircle = Math.random()*600+100;
+		var rad = intLength*5/3+20; // ajustements possible (taille)
+		var l = 1/2*(100-users[pin].klout) // ajustements possibles (couleur)
+		var l = 1/2*(100-Math.random()*80+19) // ajustements possibles (couleur)
+		cxCircle = rdm(100,window.innerWidth)-50;
+		cyCircle = rdm(150,window.innerHeight)-50;
 		checkPos(cxCircle,cyCircle,rad,users[pin].ID);
+		var tname;
+		(users[pin].nom.length>19)?tname=users[pin].pseudo:tname=users[pin].nom;
 		var color = Raphael.hsl(203,90,l);
 		var circle = r.circle(cxCircle,cyCircle,rad); 
 			circle.name = users[pin].nom;
@@ -292,6 +359,10 @@ init = function () {
 			var showLine1 = r.path(["M" + x + " " + y + " L" + x2 + " " + y2]).attr(transp);
 			var showLine2 = r.path(["M" + x3 + " " + y3 + " L" + x4 + " " + y4]).attr(transp);
 				show.attr(transp);
+				show.klout=users[pin].klout;
+				show.followers=nbFollowers/users[pin].followers;
+				show.following=nbFollowing/users[pin].following;
+				show.tweets=users[pin].tweets;
 				show.status=false;
 				show.ori=({'fill':'#516775',"fill-opacity":'.6','stroke':'#fff','stroke-opacity':'.5'});
 				show.lines={"0":showLine1,"1":showLine2};
@@ -302,7 +373,9 @@ init = function () {
 			// show.anim=({0:anim1,1:anim2,2:anim3,3:anim4});
 			circle.attrs.show = show
 		// var text = r.text(cxCircle,cyCircle,users[pin].nom);
-		var text = r.text(cxCircle,cyCircle,users[pin].nom).transform('s2');
+		var pix = 0.02*rad;
+		// var text = r.print(cxCircle,cyCircle,users[pin].nom,r.getFont("Georgia"),pix);
+		var text = r.text(cxCircle,cyCircle,tname).transform('s'+pix).attr({'fill':'#fff'});
 			text.attrs.circle = circle;
 		group.push(circle);
 		group.push(text);
@@ -410,10 +483,11 @@ init = function () {
 			// console.log(t.attrs)
 			t.animate({transform: 's2.5'},500,'<',function() {
 				// ICI MEGA ANIMATION INTERNE
-				var stat1 = 50;
-				var stat2 = 80;
-				var stat3 = 15;
-				var stat4 = 20;
+				console.log(t)
+				var stat1 = (t.klout+10)*2;
+				var stat2 = Math.random()*50+10;
+				var stat3 = Math.random()*100+10;
+				var stat4 = t.tweets/ar;
 				var val1 = stat1/2;
 				var val2 = stat2/2;
 				var val3 = stat3/2;
@@ -579,7 +653,7 @@ init = function () {
 	var interc = [];
 	
 initLinks = function () {
-		// console.log('initlinks')
+		console.log('initlinks')
 		var circlesL = circles.length;
 		for (i=0;i<circlesL;i++){
 			var newInterect=[];
