@@ -124,11 +124,11 @@ body {
 
 #content header #legende {
 	position: absolute;
-	background-color: rgba(255, 255, 255, 0.3);
+	background: rgba(100, 100, 100, 0.9) url(images/legende.png);
 	z-index: 18;
 	top: 59px;
 	right: 40px;
-	height: 300px;
+	height: 497px;
 	width: 300px;
 	border: #262a2e 1px solid;	
 	padding: 10px;
@@ -145,7 +145,7 @@ body {
 
 #content header #creerliste {
 	position: absolute;
-	background-color: rgba(255, 255, 255, 0.3);
+	background-color: rgba(100, 100, 100, 0.9);
 	z-index: 18;
 	top: 59px;
 	right: 175px;
@@ -171,7 +171,7 @@ body {
 
 #content #hashtags {
 	position: absolute;
-	background-color: rgba(200, 200, 200, 0.5);
+	background-color: rgba(100, 100, 100, 0.9);
 	z-index: 18;
 	bottom: 20px;
 	left: 20px;
