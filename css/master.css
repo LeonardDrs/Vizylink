@@ -3,12 +3,22 @@
 /*-------FIN DE RESET-----------*/
 
 @font-face {
+    font-family: 'HelveticaCn';
+    src: url('helveticaneueltstd-cn-webfont.eot');
+    src: url('helveticaneueltstd-cn-webfont.eot?#iefix') format('embedded-opentype'),
+         url('helveticaneueltstd-cn-webfont.woff') format('woff'),
+         url('helveticaneueltstd-cn-webfont.ttf') format('truetype'),
+         url('helveticaneueltstd-cn-webfont.svg#helveticaneueltstd-cn-webfont') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
     font-family: 'Pacifico';
-    src: url('pacificio-webfont.eot');
-    src: url('pacificio-webfont.eot?#iefix') format('embedded-opentype'),
-         url('pacificio-webfont.woff') format('woff'),
-         url('pacificio-webfont.ttf') format('truetype'),
-         url('pacificio-webfont.svg#pacificio-webfont') format('svg');
+    src: url('pacifico-webfont.eot');
+    src: url('pacifico-webfont.eot?#iefix') format('embedded-opentype'),
+         url('pacifico-webfont.woff') format('woff'),
+         url('pacifico-webfont.ttf') format('truetype'),
+         url('pacifico-webfont.svg#pacifico-webfont') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -122,6 +132,7 @@ body {
 	width: 300px;
 	border: #262a2e 1px solid;	
 	padding: 10px;
+	display: none;
 }
 
 #content header #legende a {
@@ -130,6 +141,96 @@ body {
 	color: #FFF;
 	opacity: 0.5;
 	float: right;
+}
+
+#content header #creerliste {
+	position: absolute;
+	background-color: rgba(255, 255, 255, 0.3);
+	z-index: 18;
+	top: 59px;
+	right: 175px;
+	height: 300px;
+	width: 300px;
+	border: #262a2e 1px solid;	
+	padding: 10px;
+	display: none;
+}
+
+#content header #creerliste a {
+	background: none;
+	text-decoration: none;
+	color: #FFF;
+	opacity: 0.5;
+	float: right;
+}
+
+.relation{
+	position: absolute;
+	bottom:0;
+}
+
+#content #hashtags {
+	position: absolute;
+	background-color: rgba(200, 200, 200, 0.5);
+	z-index: 18;
+	bottom: 20px;
+	left: 20px;
+	min-height: 150px;
+	min-width: 150px;
+	border: #262a2e 1px solid;	
+	padding: 10px;
+	display: none;
+	color: #dadada;
+}
+
+#content #hashtags hr{
+	height: 1px;
+	border-width: 0;
+	background-color: rgba(50, 50, 50, 0.9);
+	color: rgba(100, 100, 100, 0.5);
+}
+
+#content #hashtags a {
+	background: none;
+	text-decoration: none;
+	color: #FFF;
+	opacity: 0.5;
+	float: right;
+}
+
+#content #hashtags span{
+	float:right;
+}
+
+#content #hashtags #closehashtags{
+	position: absolute;
+	top:5px;
+	right:5px;
+}
+
+#content #hashtags h2{
+	font-family: "HelveticaCn", helvetica, arial, sans-serif;
+	font-size:16px;
+	color:#151A20;
+}
+
+#content #hashtags h3{
+	color:#151A20;
+	margin: 10px 0 5px 0;
+}
+
+#content #hashtags h3 .hr1{
+	position: relative;
+	top: 2px;
+	width: 98px;
+	float:right;
+}
+
+#content #hashtags h3 .hr2{
+	position: relative;
+	top: 2px;
+	width:50px;
+	float:right;
 }
 
 #container {

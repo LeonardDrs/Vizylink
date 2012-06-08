@@ -16,23 +16,86 @@ function newObj(nom,inf,int,id) {
 		};
 	return o;
 }
-$(function(){
-	$('body, #content').height(window.innerHeight);
 
-	$('#legende').hide();
+$(function(){
+
+	var hl; var hc; var hh;
+	$('body, #content').height(window.innerHeight);
 	
-	$('.legende').click(function(){
+	function showlegend(){
 		$('#legende').show();
 		$('.legende').css({"background":"#f1f1f1","color":"#333"});
-	});
+	}
 	
-	$('#close').click(function(){
+	function hidelegend(){
 		$('#legende').hide();
 		$('.legende').css({"background":"#86888a","color":"#151a20"});
+	}
+	
+	function showcreerliste(){
+		$('#creerliste').show();
+		$('.creerliste').css({"background":"#f1f1f1","color":"#333"});
+	}
+	
+	function hidecreerliste(){
+			$('#creerliste').hide();
+			$('.creerliste').css({"background":"#86888a","color":"#151a20"});
+	}
+	
+	$('.legende').click(function(){
+		if(hc == 1){
+			hidecreerliste();
+			showlegend();
+			hc = 0;
+		}else{
+			showlegend();
+		}
+		
+		if(hl == 1){
+			hidelegend();
+			hl = 0;
+		}else { hl = 1;}
+		
 	});
 	
+	$('#closeleg').click(function(){
+		hidelegend();
+		hl = 0;
+	});
+
+	$('.creerliste').click(function(){
+		if(hl == 1){
+			hidelegend();
+			showcreerliste();
+			hl = 0;
+		}else{
+			showcreerliste();
+		}
+		if(hc == 1){
+			hidecreerliste();
+			hc = 0;
+		}else {hc = 1;}
+	});
 	
+	$('#closelist').click(function(){
+		hidecreerliste();
+		hc = 0;
+	});
 	
+	$('.relation').click(function(){
+		if( hh == 1){
+			$('#hashtags').hide();
+			hh = 0;
+		}else{ 
+			$('#hashtags').show();
+			hh = 1;
+		}
+	});
+	
+	$('#closehashtags').click(function(){
+		$('#hashtags').hide();
+		hh = 0;
+	});
 	
 	
 	
