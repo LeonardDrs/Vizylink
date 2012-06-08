@@ -487,27 +487,28 @@ init = function () {
 				var stat1 = (t.klout+10)*2;
 				var stat2 = Math.random()*50+10;
 				var stat3 = Math.random()*100+10;
-				var stat4 = t.tweets/ar;
+				var stat4 = Math.random()*50+10;
 				var val1 = stat1/2;
 				var val2 = stat2/2;
 				var val3 = stat3/2;
 				var val4 = stat4/2;
-				anim1 = r.path().attr({arc:[ax, ay, 0, ar+val1]});
+				anim1 = r.path().attr({arc:[ax, ay, 0, ar+val1],"stroke":"#588cad"});
 					anim1.attrs.ax = ax;
 					anim1.attrs.ay = ay;
 					anim1.attrs.ar = ar;
 					anim1.attrs.val1 = val1;
 					anim1.attrs.t = t;
-				anim2 = r.path().attr({arc:[ax, ay, 0, ar+val2]});
+				anim2 = r.path().attr({arc:[ax, ay, 0, ar+val2],"stroke":"#67b0df"});
 					anim2.attrs.val2 = val2;
-				anim3 = r.path().attr({arc:[ax, ay, 0, ar+val3]});
+				anim3 = r.path().attr({arc:[ax, ay, 0, ar+val3],"stroke":"#156493"});
 					anim3.attrs.val3 = val3;
-				anim4 = r.path().attr({arc:[ax, ay, 0, ar+val4]});
+				anim4 = r.path().attr({arc:[ax, ay, 0, ar+val4],"stroke":"#a5c6da"});
 					anim4.attrs.val4 = val4;
-					anim1.attr({'stroke':'#fff',"stroke-width":stat1}).transform('r-45 '+ax+' '+ay)
-					anim2.attr({'stroke':'#fff',"stroke-width":stat2}).transform('r45 '+ax+' '+ay)
-					anim3.attr({'stroke':'#fff',"stroke-width":stat3}).transform('r135 '+ax+' '+ay)
-					anim4.attr({'stroke':'#fff',"stroke-width":stat4}).transform('r225 '+ax+' '+ay)
+					anim1.attr({"stroke-width":stat1}).transform('r-45 '+ax+' '+ay)
+					anim2.attr({"stroke-width":stat2}).transform('r45 '+ax+' '+ay)
+					anim3.attr({"stroke-width":stat3}).transform('r135 '+ax+' '+ay)
+					anim4.attr({"stroke-width":stat4}).transform('r225 '+ax+' '+ay)
+
 				// var it = 0;
 				var vit = 250
 				anim1.animate({
