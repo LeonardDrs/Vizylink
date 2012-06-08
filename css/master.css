@@ -122,6 +122,7 @@ body {
 	width: 300px;
 	border: #262a2e 1px solid;	
 	padding: 10px;
+	display:none;
 }
 
 #content header #legende a {

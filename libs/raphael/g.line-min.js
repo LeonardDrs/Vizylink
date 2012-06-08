@@ -13,7 +13,8 @@ Raphael.fn.connection = function(obj1,obj2,color, raphael) {
 
     var node = raphael.path(getPath()).toBack();
 		node.attr({'stroke':color,'stroke-width':'2'});
-		link.push(node);
+		link.push({"1":obj1,"2":obj2,"link":node});
+		// console.log(link)
 };
 
 

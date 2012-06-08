@@ -5,8 +5,14 @@ var link = [];
 var onClickCircle=false;
 var effect = [] // onclick
 var test;
+var connexion=[]
+var i = 0
+var anim1;
 // var pos = [{"x":0,"y":0,"r":0}];
-var pos = [{}];
+
+
+// tweets , klout, followers , following 
+var pos = [];
 function newObj(nom,inf,int,id) {
 	var o = {
 		name : nom,
@@ -44,43 +50,45 @@ $(function(){
 	    document.addEventListener(mousewheelevt, wheel, false)
 	
 	
-	var intA=[{"nom":"Thomas","ID":"B"},{"nom":"Marius","ID":"C"},{"nom":"LEO","ID":"E"}];
+	var intA=[{"nom":"Marius","ID":"C"},{"nom":"LEO","ID":"E"}];
 	var intB=[{"nom":"Léonard","ID":"A"},{"nom":"LEO","ID":"E"},{"nom":"LEO","ID":"F"},{"nom":"LEO","ID":"G"},{"nom":"LEO","ID":"H"},{"nom":"LEO","ID":"I"},{"nom":"LEO","ID":"J"},{"nom":"LEO","ID":"JA"},{"nom":"LEO","ID":"JZ"},{"nom":"LEO","ID":"JE"},{"nom":"LEO","ID":"JR"},{"nom":"LEO","ID":"JT"},{"nom":"LEO","ID":"JY"},{"nom":"LEO","ID":"JU"},{"nom":"LEO","ID":"JI"},{"nom":"LEO","ID":"JO"},{"nom":"LEO","ID":"JP"},{"nom":"LEO","ID":"JQ"}];
 	var intC=[{"nom":"Léonard","ID":"A"}];
 	var intE=[{"nom":"Léonard","ID":"A"},{"nom":"Thomas","ID":"B"}];
 	
 	A = newObj("Léonard",59,intA,"A");
-	B = newObj("Thomas",0,intB,"B");
+	B = newObj("Thomas",100,intB,"B");
 	C = newObj("Marius",100,intC,"C");
-	D = newObj("Léonard",20,intA,"D");
+	D = newObj("D",20,intA,"D");
 	E = newObj("LEO",40,intE,"E");
-	F = newObj("Léonard",89,intA,"F");
-	G = newObj("Léonard",17,intA,"G");
-	H = newObj("Léonard",90,intA,"H");
-	I = newObj("Léonard",77,intA,"I");
-	J = newObj("Léonard",66,intA,"J");
-	JA = newObj("Léonard",66,intA,"JA");
-	JZ = newObj("Léonard",66,intA,"JZ");
-	JE = newObj("Léonard",66,intA,"JE");
-	JR = newObj("Léonard",66,intA,"JR");
-	JT = newObj("Léonard",66,intA,"JT");
-	JY = newObj("Léonard",66,intA,"JY");
-	JU = newObj("Léonard",66,intA,"JU");
-	JI = newObj("Léonard",66,intA,"JI");
-	JO = newObj("Léonard",66,intA,"JO");
-	JP = newObj("Léonard",66,intA,"JP");
-	JQ = newObj("Léonard",66,intA,"JQ");
-	JS = newObj("Léonard",66,intA,"JS");
-	JD = newObj("Léonard",66,intA,"JD");
-	JF = newObj("Léonard",66,intA,"JF");
-	JG = newObj("Léonard",66,intA,"JG");
-	JH = newObj("Léonard",66,intA,"JH");
-	JJ = newObj("Léonard",66,intA,"JJ");
-	JK = newObj("Léonard",66,intA,"JK");
+	F = newObj("LéoFnard",89,intA,"F");
+	G = newObj("LéonGard",17,intA,"G");
+	H = newObj("LéonaHrd",90,intA,"H");
+	I = newObj("LéonIard",77,intA,"I");
+	J = newObj("LéonaJrd",66,intA,"J");
+	JA = newObj("LéonJAard",66,intA,"JA");
+	JZ = newObj("LéJZonard",66,intA,"JZ");
+	JE = newObj("LéoJEnard",66,intA,"JE");
+	JR = newObj("LéonJRard",66,intA,"JR");
+	JT = newObj("JTLéonard",66,intA,"JT");
+	JY = newObj("LéJYonard",66,intA,"JY");
+	JU = newObj("LéonJUard",66,intA,"JU");
+	JI = newObj("LéonarJId",66,intA,"JI");
+	JO = newObj("LéonJOard",66,intA,"JO");
+	JP = newObj("LéJPonard",66,intA,"JP");
+	JQ = newObj("LéoJQnard",66,intA,"JQ");
+	JS = newObj("LéonaJSrd",66,intA,"JS");
+	JD = newObj("LéJDonard",66,intA,"JD");
+	JF = newObj("LéoJFnard",66,intA,"JF");
+	JG = newObj("LéonJGard",66,intA,"JG");
+	JH = newObj("LéonJHard",66,intA,"JH");
+	JJ = newObj("LéoHJJnard",66,intA,"JJ");
+	JK = newObj("LéonJKard",66,intA,"JK");
 	// HETIC.push(A,B,C,E);
 	 HETIC.push(A,B,C,D,E,F,G,H,I,J,JA,JZ,JE,JR,JT,JY,JU,JI,JO,JP,JQ,JS,JD,JF,JG,JH);
 	var r=Raphael('content',"100%","100%");
 	r.customAttributes.arc = function (xloc, yloc, value, R) {
+		// console.log(xloc,yloc,value,R)
+		// return false
 		var total = 100;
 		var alpha = 360 / total * value;
 		var a = (90 - alpha) * Math.PI / 180;
@@ -155,7 +163,7 @@ $(function(){
 			delta = -event.detail/3;
 		}
 		if (delta) {
-			zoom(delta);
+			zoom(-delta);
 		}
 		if (event.preventDefault) {
 			event.preventDefault();
@@ -210,26 +218,9 @@ $(function(){
 	    // this.animate({cx: newcx, cy: newcy}, 1000, '>');
 		this.animate ({transform:'t'+newcx+newcy},1000)
 	}
-/*	
-	var max = Math.PI*2;
-	var popularity = [];
-	var pop=0;
-	for(var i = 0;i<my_songs.length;i++){
-		popularity.push(my_songs[i].data.popularity);
-
-	}	var res = median(popularity);
-		var canvas = document.getElementById('canvas1');
-		var ctx = canvas.getContext('2d');
-		ctx.beginPath();
-		ctx.strokeStyle = "rgb(127, 186, 91)";
-		var o = Math.floor((max/100)*res);
-		ctx.arc(100, 101, 50, 0, o, false);
-		ctx.lineWidth = 10;
-		ctx.stroke();
-*/
 
 
-	function checkPos(x,y,r,debug) {
+checkPos = function (x,y,r,debug) {
 		for (var i=0; i < pos.length; i++) {
 			// console.log("i",i)
 			// console.log(x,y,r,debug,"reçu")
@@ -260,137 +251,312 @@ $(function(){
 	
 	var evObj = document.createEvent('MouseEvents'); 
 	evObj.initEvent('click', true, false);
-	for (pin in HETIC ){
+	
+init = function () {
+	for (pin in users ){
 		var group = r.set();
-		var intLength = HETIC[pin].interactions.length;
-		var rad = intLength*75/13; // ajustements possible (taille)
-		var l = 1/2*(100-HETIC[pin].influence)+35 // ajustements possibles (couleur)
-		var cxCircle = Math.random()*900+200;
-		var cyCircle = Math.random()*600+100;
-		checkPos(cxCircle,cyCircle,rad,HETIC[pin].name);
+		var intLength = users[pin].interactions.length;
+		var rad = intLength*75/13+10; // ajustements possible (taille)
+		var l = 1/2*(100-users[pin].klout)+35 // ajustements possibles (couleur)
+		cxCircle = Math.random()*900+200;
+		cyCircle = Math.random()*600+100;
+		checkPos(cxCircle,cyCircle,rad,users[pin].ID);
 		var color = Raphael.hsl(203,90,l);
 		var circle = r.circle(cxCircle,cyCircle,rad); 
-			circle.name = HETIC[pin].name;
+			circle.name = users[pin].nom;
 			circle.attrs.origCx = cxCircle;
 			circle.attrs.origCy = cyCircle;
 			circle.attrs.color = color;
 			circle.attrs.l = l;
-			circle.attrs.ID = HETIC[pin]["ID"];
+			circle.attrs.ID = users[pin].ID;
 			// console.log( HETIC[pin]["name"])
-			circle.attrs.interactions = HETIC[pin].interactions;
+			circle.attrs.interactions = users[pin].interactions;
 			// console.log(cy,'enregistr')
 			// circle.hover(function(e) {console.log(this.name)},function() {})
 			circle.attr({"stroke":"transparent", fill: color});
-		var text = r.text(cxCircle,cyCircle,HETIC[pin].name);
+			// OUVERTURE DU CERCLE SUR "+"
+			var show = r.circle(cxCircle,cyCircle,rad);
+			var a = -135 * Math.PI / 180;
+			var b = 45 * Math.PI / 180;
+			var x = cxCircle + rad * Math.cos(a);
+			var y = cyCircle + rad * Math.sin(a);
+			var x2 = cxCircle + rad * Math.cos(b);
+			var y2 = cyCircle + rad * Math.sin(b);
+			var d = 135 * Math.PI / 180;
+			var c = -45 * Math.PI / 180;
+			var x3 = cxCircle + rad * Math.cos(c);
+			var y3 = cyCircle + rad * Math.sin(c);
+			var x4 = cxCircle + rad * Math.cos(d);
+			var y4 = cyCircle + rad * Math.sin(d);
+			var transp = {fill:"",stroke:""};
+			var showLine1 = r.path(["M" + x + " " + y + " L" + x2 + " " + y2]).attr(transp);
+			var showLine2 = r.path(["M" + x3 + " " + y3 + " L" + x4 + " " + y4]).attr(transp);
+				show.attr(transp);
+				show.status=false;
+				show.ori=({'fill':'#516775',"fill-opacity":'.6','stroke':'#fff','stroke-opacity':'.5'});
+				show.lines={"0":showLine1,"1":showLine2};
+				show.linesAttr={'stroke':'#fff','stroke-opacity':'.5'};
+
+		// ANIMATION DU + 
+
+			// show.anim=({0:anim1,1:anim2,2:anim3,3:anim4});
+			circle.attrs.show = show
+		// var text = r.text(cxCircle,cyCircle,users[pin].nom);
+		var text = r.text(cxCircle,cyCircle,users[pin].nom).transform('s2');
 			text.attrs.circle = circle;
 		group.push(circle);
 		group.push(text);
 		circle.click(function(e) {onClick(this)})
 		text.click(function(e){this.attrs.circle.node.dispatchEvent(evObj)}); //trigger
-		circles.push({"name":circle.name,"circle":circle,"interactions":HETIC[pin].interactions});
+		circles.push({"name":circle.name,"circle":circle,"interactions":users[pin].interactions});
 		grp.push(group)
 	}
-	
-	function clearLinks(){
+}	
+	function resetLinks(){
 		var linkL=link.length;
 		for(i=0;i<linkL;i++){
-			link[i].remove();
+			// link[i].attr({stroke:'#3c9edb'})
+			// console.log(link[i]["link"].attr({stroke:'#3c9edb'}))
+			link[i]["link"].attr({stroke:'#205b80',opacity:'1'})
 		}
 	}
 	
 	
-	$('#container svg').click(function(e) {
+	$('#content svg').click(function(e) {
 		if (e.target.nodeName === "svg" && onClickCircle)
 	    {
-			rinitCicles();
-			clearLinks()
-			initLinks();
+			
 			initHalo();
+			rinitCircles();
+			resetLinks();
+			// initLinks();
 	    }	
 	})
-	
-	function initHalo(){
+	function initHalo(debg){
 		var x = effect[0]['x'];
 		var y = effect[0]['y'];
 		var rad = effect[0]['rad'];
+	if(anim1){
+		var vit = 100
+		var ax =anim1.attrs.ax;
+		var ay =anim1.attrs.ay;
+		var ar =anim1.attrs.ar;
+		var val1=anim1.attrs.val1;
+		var val2=anim2.attrs.val2;
+		var val3=anim3.attrs.val3;
+		var val4=anim4.attrs.val4;
+		
+		var t = anim1.attrs.t;
+		
+		
+		// console.log(ax,ay,ar,val1,val2,val3,val4)
+		anim4.animate({
+			arc: [ax,ay,0,ar+val4]
+		},vit,'=',function() {
+				anim3.animate({
+					arc: [ax,ay,0,ar+val3]
+				},vit,'=',function() {
+						anim2.animate({
+							arc: [ax,ay,0,ar+val2]
+						},vit,'=',function() {
+								anim1.animate({
+									arc: [ax,ay,0,ar+val1]
+								},vit,'=',function() {
+
+									t.animate({transform: 's1'},300,'<',function() {
+											t.lines[0].attr({'stroke':'','fill':''});
+											t.lines[1].attr({'stroke':'','fill':''});
+											t.attr({'stroke':'','fill':''}).toBack();
+											// onClickCircle=false;
+											t.status=false;
+									});
+									t.lines[0].animate({transform: 's1'},200,'<');
+									t.lines[1].animate({transform: 's1'},200,'<');
+									effect[0]['halo'].animate({
+										arc: [x,y,200,rad],
+										transform: 's1'
+									}, 500,"<",function() {
+									
+									});
+								})
+						})
+				})
+		})
+		
+	}
 		effect[0]['halo'].animate({
 			arc: [x,y,200,rad]
 		}, 500,"<>",function() {
 			onClickCircle=false;
+		
 		});
 		x2 = effect[1].attrs.cx;
 		y2 = effect[1].attrs.cy;
 		// effect[1].animate({transform:'matrix(1,0,0,1,'+x2+','+y2+')'},600,"=",function() {this.remove()});
-		effect[1].animate({transform:'m'+x2+' '+y2},600,"<",function() {this.remove()});
+		effect[1].attr({opacity:'0'}).animate({transform:'m'+x2+' '+y2},600,"<",function() {
+			this.remove();
+			// console.log("OMFGOMFGOMFGOMFGOMFGOMFGOMFGOMFGOMFGOFGMFOGFMGFOGFMGFOGMF",i,"id effect")
+			});
+		effect[2].remove();
 		effect = [];
+	}
+	function onClickPlus(t,open) {
+		if (!open) {
+			// mega show :DDD
+			var ax = t.attrs.cx;
+			var ay = t.attrs.cy;
+			var ar = t.attrs.r;
+			t.attr(t.ori);
+			// console.log(t.attrs)
+			t.animate({transform: 's2.5'},500,'<',function() {
+				// ICI MEGA ANIMATION INTERNE
+				var stat1 = 50;
+				var stat2 = 80;
+				var stat3 = 15;
+				var stat4 = 20;
+				var val1 = stat1/2;
+				var val2 = stat2/2;
+				var val3 = stat3/2;
+				var val4 = stat4/2;
+				anim1 = r.path().attr({arc:[ax, ay, 0, ar+val1]});
+					anim1.attrs.ax = ax;
+					anim1.attrs.ay = ay;
+					anim1.attrs.ar = ar;
+					anim1.attrs.val1 = val1;
+					anim1.attrs.t = t;
+				anim2 = r.path().attr({arc:[ax, ay, 0, ar+val2]});
+					anim2.attrs.val2 = val2;
+				anim3 = r.path().attr({arc:[ax, ay, 0, ar+val3]});
+					anim3.attrs.val3 = val3;
+				anim4 = r.path().attr({arc:[ax, ay, 0, ar+val4]});
+					anim4.attrs.val4 = val4;
+					anim1.attr({'stroke':'#fff',"stroke-width":stat1}).transform('r-45 '+ax+' '+ay)
+					anim2.attr({'stroke':'#fff',"stroke-width":stat2}).transform('r45 '+ax+' '+ay)
+					anim3.attr({'stroke':'#fff',"stroke-width":stat3}).transform('r135 '+ax+' '+ay)
+					anim4.attr({'stroke':'#fff',"stroke-width":stat4}).transform('r225 '+ax+' '+ay)
+				// var it = 0;
+				var vit = 250
+				anim1.animate({
+					arc: [ax,ay,26,ar+val1]
+				},vit,'=',function() {
+						anim2.animate({
+							arc: [ax,ay,25,ar+val2]
+						},vit,'=',function() {
+								anim3.animate({
+									arc: [ax,ay,26,ar+val3]
+								},vit,'=',function() {
+										anim4.animate({
+											arc: [ax,ay,26,ar+val4]
+										},vit,'=')
+								})
+						})
+				})
+			});
+			t.lines[0].animate({transform: 's2.5'},500,'<');
+			t.lines[1].animate({transform: 's2.5'},500,'<');
+			effect[0]["halo"].animate({transform: 's2.45'},500,'<');
+			
+			t.lines[0].attr(t.linesAttr);
+			t.lines[1].attr(t.linesAttr);
+			t.status=true;
+		} else {
+			t.animate({transform: 's1'},500,'<',function() {
+				this.attr({fill:'',stroke:''});
+			});
+			effect[0]["halo"].animate({transform: 's1'},500,'<');
+			t.lines[0].animate({transform: 's1'},500,'<');
+			t.lines[1].animate({transform: 's1'},500,'<');
+			t.status=false
+		}
 	}
 	
 	function onClick(t){
-		for (i=0;i<circles.length;i++) {
-			if (t!=circles[i].circle) {
-				var l = circles[i].circle.attrs.l
-				var color = Raphael.hsl(200,30,l);
-				circles[i].circle.attr({"stroke":"transparent", fill: color});
-			} else {
-				var currCircle= circles[i].circle;
-				var ccx = currCircle.attrs.cx;
-				var ccy = currCircle.attrs.cy;
-				var ccr = currCircle.attrs.r;
-				var cR = ccr*30/100
-				currCircle.attr({"stroke":"transparent", fill: currCircle.attrs.color});
-			// console.log(t.name);
-				var cx = (5*ccr/7);
-				var cy = (5*ccr/7);
-				var plus = r.circle(ccx,ccy,cR).toBack();
-					plus.attrs.cx = ccx;
-					plus.attrs.cy = ccy;
-					plus.attr({'fill': currCircle.attrs.color,'stroke':'transparent'});
-					// wiggle (plus,10,cx,cy);
-					// plus.animate({"cx":cx,"cy":cy},">",500)
-					plus.animate({transform:'t-'+cx+' -'+cy},600,">")
-				var plusText = 
-					currCircle.attr({"stroke":"transparent", fill: currCircle.attrs.color});
-					
-					// plus.animate({transform :"t"+cx+cy},">",500)
+		var interL=t.attrs.interactions.length;
+		var hide = [];
+		hide.push(t)
+		for (j=0;j<interL;j++){
+			for (i=0;i<circles.length;i++) {
+				circles[i].circle.attr({opacity:'0.3'}).toBack();
+				if (t.attrs.interactions[j]==circles[i].circle) {
+						hide.push(circles[i].circle);
+				}
 			}
 		}
+		for (i=0;i<hide.length;i++){
+			hide[i].attr({opacity:'1'});
+		}
+		// if (interL==0) {rinitCircles()};
+
+		var ccx = t.attrs.origCx;
+		var ccy = t.attrs.origCy;
+		var ccr = t.attrs.r;
+		var cR = ccr*30/100
+			// currCircle.attr({"stroke":"", opacity: currCircle.attrs.color});
+			// currCircle.attr({"stroke":"", fill: currCircle.attrs.color});
+			// console.log(t.name);
+		var cx = (5*ccr/7);
+		var cy = (5*ccr/7);
+		var plus = r.circle(ccx,ccy,cR).toBack();
+			plus.attrs.cx = ccx;
+			plus.attrs.cy = ccy;
+					// currCircle.attrs.color
+			plus.attr({'fill': t.attrs.color,'stroke':'transparent'});
+					// wiggle (plus,10,cx,cy);
+						// plus.animate({"cx":cx,"cy":cy},">",500)
+			plus.animate({transform:'t-'+cx+' -'+cy},600,'>')
+		var plusText = r.text(ccx,ccy,'+').attr({'fill':''});
+			plusText.animate({transform:'t-'+cx+' -'+cy},600,">",function() {this.attr({'fill':'#000',})})
+			plusText.attrs.circle = plus;
+			plus.click(function(e) {onClickPlus(t.attrs.show,t.attrs.show.status)})
+			plusText.click(function(e){this.attrs.circle.node.dispatchEvent(evObj)}); //trigger
+			t.attr({"stroke":"", fill: t.attrs.color},function() {});
+			
+		
+			t.attrs.show.lines[0].toBack()
+			t.attrs.show.lines[1].toBack()
 		// animated stuff
 		
 		if(effect[0]){
-			initHalo();
+			initHalo(true);
+			// console.log("OMFGOMFGOMFGOMFGOMFGOMFGOMFGOMFGOMFGOFGMFOGFMGFOGFMGFOGMF",i,"pd ?")
 		}
 		
-			onClickCircle=true;
+		onClickCircle=true;
 		if (!effect.length) {
+			console.log(t,'REGARDE MF')
 			var x=t.attrs.cx;
 			var y=t.attrs.cy;
 			var rad=t.attrs.r+ 5;
 			var halo = r.path().attr({
 				arc: [x,y,0,rad],
-				'stroke': "#F00",
-				'stroke-width': 5
+				'stroke': "#12364b",
+				'stroke-width': 5,
+				
 			}).toBack();
 			halo.stop().animate({
 				arc: [x,y,100,rad],
 				'stroke-width': 5,
-				'stroke': "#F00"
+				'stroke': "#12364b"
 			}, 500,"<>",function() {
-				onClickCircle=true;	
+				onClickCircle=true;
 			});
 			effect.push({"halo":halo,"x":x,"y":y,"rad":rad});
-			effect.push(plus)
+			effect.push(plus);
+			effect.push(plusText);
 		}
 		
-		clearLinks();
-		for (j=0;j<interc.length;j++){
-			// console.log(interc[j][0]);
-			// console.log(interc[j][0],currCircle);
-			if(interc[j][0]==currCircle || interc[j][1]==currCircle){
-				r.connection(interc[j][0],interc[j][1],"#3c9edb",r)
+		var linkL = link.length
+		for (var i=0;i<linkL;i++){
+			if (t!=link[i][1] && t!=link[i][2]){
+				// si les liens sont differrent, remove ou assombre
+				// link[i]['link'].remove()
+				// link[i]['link'].attr({'stroke':''})
+				link[i]['link'].attr({stroke:'#205b80',opacity:'.3'}).toBack()
+				// link[i]['link'].attr({stroke:'red',"stroke-dasharray":["-."]})
 			} else {
-				r.connection(interc[j][0],interc[j][1],"#205b80",r)
+				link[i]['link'].attr({stroke:'#3c9edb',opacity:'1'}).toBack()
+				// console.log(link[i]['link'])
 			}
-			// if(connexion.push(r.connection(interc[j][0],interc[j][1],"#3c9edb",r))){console.log('done')}
 		}
 		
 		
@@ -412,28 +578,36 @@ $(function(){
 	// console.log(circles)
 	var interc = [];
 	
-	function initLinks() {
-		for (i=0;i<circles.length;i++){
+initLinks = function () {
+		// console.log('initlinks')
+		var circlesL = circles.length;
+		for (i=0;i<circlesL;i++){
+			var newInterect=[];
 			// console.log(circles[i],'cercle')
-			for (j=0;j<circles[i].interactions.length;j++){
+			var itrsL = circles[i].interactions.length;
+			for (j=0;j<itrsL;j++){
+				
 				// console.log(circles[i].circle.attrs.ID,'id',circles[i].circle.name)
 				// console.log(circles[i].interactions[j].ID,'interaction')
-				for (k=0;k<circles.length;k++){
+				for (k=0;k<circlesL;k++){
 					// console.log("does it")
 					// console.log(circles[k].circle.attrs.ID,"match ?")
-					if (circles[i].interactions[j].ID == circles[k].circle.attrs.ID) {	
-						// interc.push({"0":circles[k],"1":circles[i]})
+					if (circles[i].interactions[j].ID == circles[k].circle.attrs.ID) {
+						newInterect.push(circles[k].circle)
+						interc.push({"0":circles[k],"1":circles[i]})
 						// console.log(circles[k].name,"match")
 						// console.log("link",circles[i],circles[k])
 						var circle1 = circles[i].circle;
 						var circle2 = circles[k].circle;
-						interc.push({"0":circle1,"1":circle2})
+							// interc.push({"0":circle1,"1":circle2})
 						// console.log(circles[i].circle,circle2,"OUI")
-						if(r.connection(circle1,circle2,'#205b80',r)){console.log('done')}
-						k = circles.length;
+						r.connection(circle1,circle2,'#205b80',r)
+						k = circles.length; // sort de la boucle
 					};
 				}
-			};
+			}
+			// console.log(circles[i].circle)
+			circles[i].circle.attrs.interactions=newInterect;
 			// console.log(HETIC[pin].interactions[i]);
 			// var x = circle.attrs.cx;
 			// var y = circle.attrs.cy;
@@ -443,12 +617,10 @@ $(function(){
 		}
 	}
 	
-	initLinks();
-	
-	function rinitCicles() {
+	function rinitCircles() {
 		for (i=0;i<circles.length;i++) {
 			var currCircle = circles[i].circle;
-			circles[i].circle.attr({"stroke":"transparent", fill: circles[i].circle.attrs.color});
+			circles[i].circle.attr({"stroke":"transparent", fill: circles[i].circle.attrs.color,opacity:"1"});
 		}
 	}
 });

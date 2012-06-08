@@ -108,7 +108,7 @@ body {
 }
 
 #content header #legende {
-	position: absolute;
+	position: absolrute;
 	background-color: rgba(255, 255, 255, 0.3);
 	z-index: 18;
 	top: 59px;
@@ -117,6 +117,7 @@ body {
 	width: 300px;
 	border: #262a2e 1px solid;	
 	padding: 10px;
+	display:none;
 }
 
 #content header #legende a {
